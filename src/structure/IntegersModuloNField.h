@@ -1,12 +1,12 @@
 #ifndef PROIECT_POO_RATIONALNFIELD_H
 #define PROIECT_POO_RATIONALNFIELD_H
 
-#include "BaseMathStructure.h"
+#include "BaseMathField.h"
 #include "../number/IntegerModuloNNumber.h"
 
-class IntegerModuloNStructure : public BaseMathStructure {
+class IntegersModuloNField : public BaseMathField {
 public:
-    explicit IntegerModuloNStructure(long long n, bool canAdd, bool canSubtract, bool canMultiply, bool canDivide);
+    explicit IntegersModuloNField(long long n);
 
     IntegerModuloNNumber createNumber() const;
 
