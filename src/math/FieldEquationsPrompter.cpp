@@ -118,7 +118,6 @@ void FieldEquationsPrompter::promptForEquationsInComplexField(const ComplexField
         while (true) {
             cout << "Enter the operand: ";
             if (cin >> value) {
-                cin.get();
                 break;
             } else {
                 cout << "[!] Please enter a valid operand.\n";

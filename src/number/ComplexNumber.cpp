@@ -1,4 +1,6 @@
 #include "ComplexNumber.h"
+#include <regex>
+#include <sstream>
 
 ComplexNumber::ComplexNumber(double real, double imaginary) : m_real(real), m_imaginary(imaginary) {}
 
@@ -55,8 +57,41 @@ ostream &operator<<(ostream &out, const ComplexNumber &number) {
 }
 
 istream &operator>>(istream &in, ComplexNumber &number) {
-    char imaginarySign, iLetter;
-    // TODO
-    in >> number.m_real >> imaginarySign >> number.m_imaginary >> iLetter;
+    string inputString;
+    getline(in, inputString);
+
+    // Search for '10.37', '10.37i' or '5.2+10.37i'
+    regex expression(
+            "(?:^([0-9]+\\.?[0-9]*) *$)|(?:^([0-9]+\\.?[0-9]*)i *$)|(?:^([0-9]+\\.?[0-9]*) *(\\+|-)? *([0-9]+\\.?[0-9]*)?i? *$)"
+    );
+    smatch result;
+    regex_search(inputString, result, expression);
+
+    // Get the numbers from the regex match
+    vector<double> numbersFound;
+    for (int i = 1; i < result.size(); i++) {
+        double tempDouble;
+        stringstream ss(result[i]);
+        if (ss >> tempDouble) {
+            numbersFound.push_back(tempDouble);
+        }
+    }
+
+    if (numbersFound.size() == 2) {
+        // Found both the real part and the imaginary part
+        number.m_real = numbersFound[0];
+        number.m_imaginary = numbersFound[1];
+    } else if (numbersFound.size() == 1) {
+        // Found a number - may be from the real part, may be from the imaginary part
+        if (inputString.find('i') < inputString.length()) {
+            number.m_imaginary = numbersFound[0];
+        } else {
+            number.m_real = numbersFound[0];
+        }
+    } else {
+        // Set so the 'if (cin >> complexNumber)' fails
+        in.setstate(std::ios::failbit);
+    }
+
     return in;
 }
