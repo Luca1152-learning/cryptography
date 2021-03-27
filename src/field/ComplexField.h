@@ -7,6 +7,8 @@
 
 class ComplexField : public BaseMathField {
 public:
+    string getName() const override;
+
     ComplexNumber createNumber() const;
 };
 

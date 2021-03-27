@@ -9,7 +9,11 @@ IntegersModuloNField::IntegersModuloNField(long long int modulus) : m_modulus(mo
     }
 }
 
-long long IntegersModuloNField::getModulus() {
+string IntegersModuloNField::getName() const {
+    return "Integers modulo " + to_string(m_modulus);
+}
+
+long long IntegersModuloNField::getModulus() const {
     return m_modulus;
 }
 

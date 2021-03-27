@@ -6,6 +6,8 @@
 
 class RationalField : public BaseMathField {
 public:
+    string getName() const override;
+
     RationalNumber createNumber() const;
 };
 

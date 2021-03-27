@@ -17,13 +17,13 @@ public:
 private:
     static char promptForOperator();
 
-    [[noreturn]] static void promptForEquationsInIntegersModuloNField(const IntegersModuloNField &field);
+    static void promptForEquationsInIntegersModuloNField(const IntegersModuloNField &field);
 
-    [[noreturn]] static void promptForEquationsInRationalField(const RationalField &field);
+    static void promptForEquationsInRationalField(const RationalField &field);
 
-    [[noreturn]] static void promptForEquationsInRealField(const RealField &field);
+    static void promptForEquationsInRealField(const RealField &field);
 
-    [[noreturn]] static void promptForEquationsInComplexField(const ComplexField &field);
+    static void promptForEquationsInComplexField(const ComplexField &field);
 };
 
 #endif //CRYPTOGRAPHY_FIELDEQUATIONSPROMPTER_H

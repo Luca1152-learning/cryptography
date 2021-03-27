@@ -20,15 +20,18 @@ void FieldEquationsPrompter::promptForEquations(BaseMathField *field) {
             }
         }
     }
+    cout << "\n";
 }
 
 char FieldEquationsPrompter::promptForOperator() {
     while (true) {
-        cout << "Enter the operator (+, -, *, /): ";
+        cout << "Enter the operator (+, -, *, /, STOP): ";
         string inputString;
         getline(cin, inputString);
         if (inputString == "+" or inputString == "-" or inputString == "*" or inputString == "/") {
             return (char) inputString[0];
+        } else if (inputString == "STOP") {
+            return 0;
         } else {
             cout << "[!] Please enter a valid operator.\n";
         }
@@ -54,6 +57,9 @@ void FieldEquationsPrompter::promptForEquationsInIntegersModuloNField(const Inte
     promptForNumberModuloN(result);
     while (true) {
         char op = promptForOperator();
+        if (op == 0) {
+            return;
+        }
         IntegerModuloNNumber currentNumber = field.createNumber();
         promptForNumberModuloN(currentNumber);
         result = decodeExpressionResult(result, op, currentNumber);
@@ -80,6 +86,9 @@ void FieldEquationsPrompter::promptForEquationsInRationalField(const RationalFie
     promptForRationalNumber(result);
     while (true) {
         char op = promptForOperator();
+        if (op == 0) {
+            return;
+        }
         RationalNumber currentNumber = field.createNumber();
         promptForRationalNumber(currentNumber);
         result = decodeExpressionResult(result, op, currentNumber);
@@ -106,6 +115,9 @@ void FieldEquationsPrompter::promptForEquationsInRealField(const RealField &fiel
     promptForRealNumber(result);
     while (true) {
         char op = promptForOperator();
+        if (op == 0) {
+            return;
+        }
         RealNumber currentNumber = field.createNumber();
         promptForRealNumber(currentNumber);
         result = decodeExpressionResult(result, op, currentNumber);
@@ -131,6 +143,9 @@ void FieldEquationsPrompter::promptForEquationsInComplexField(const ComplexField
     promptForComplexNumber(result);
     while (true) {
         char op = promptForOperator();
+        if (op == 0) {
+            return;
+        }
         ComplexNumber currentNumber = field.createNumber();
         promptForComplexNumber(currentNumber);
         result = decodeExpressionResult(result, op, currentNumber);

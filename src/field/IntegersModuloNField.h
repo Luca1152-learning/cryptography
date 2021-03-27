@@ -8,7 +8,9 @@ class IntegersModuloNField : public BaseMathField {
 public:
     explicit IntegersModuloNField(long long modulus);
 
-    long long getModulus();
+    string getName() const override;
+
+    long long getModulus() const;
 
     IntegerModuloNNumber createNumber() const;
 

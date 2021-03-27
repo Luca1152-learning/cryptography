@@ -7,6 +7,8 @@
 
 class RealField : public BaseMathField {
 public:
+    string getName() const override;
+
     RealNumber createNumber() const;
 };
 

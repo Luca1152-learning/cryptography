@@ -8,7 +8,8 @@ using namespace std;
 
 class BaseMathField {
 public:
-    // Required for dynamic_cast() to work (there must be at least one virtual function within the class)
+    virtual string getName() const = 0;
+
     virtual ~BaseMathField() = default;
 };
 
