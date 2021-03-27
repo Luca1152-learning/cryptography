@@ -1,18 +1,11 @@
 #include "FieldFactory.h"
-#include "../math/MathUtils.h"
-#include "RealField.h"
-#include "ComplexField.h"
-#include "RationalField.h"
-#include "IntegersModuloNField.h"
+#include "MathUtils.h"
+#include "../field/RealField.h"
+#include "../field/ComplexField.h"
+#include "../field/RationalField.h"
+#include "../field/IntegersModuloNField.h"
+#include "../exceptions/NotAFieldException.h"
 
-// Custom exceptions
-NotAFieldException::NotAFieldException() : runtime_error("The given structure is not a field.") {}
-
-const char *NotAFieldException::what() const _NOEXCEPT {
-    return "The given structure is not a field.";
-}
-
-// FieldFactory actual code
 BaseMathField *FieldFactory::promptFieldCreation() {
     int setChoice;
     while (true) {

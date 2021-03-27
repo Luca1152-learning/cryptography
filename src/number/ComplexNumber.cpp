@@ -8,6 +8,20 @@ ComplexNumber &ComplexNumber::setValue(double real, double imaginary) {
     return *this;
 }
 
+ComplexNumber decodeExpressionResult(const ComplexNumber &left, char op, const ComplexNumber &right) {
+    switch (op) {
+        case '+':
+            return left + right;
+        case '-':
+            return left - right;
+        case '*':
+            return left * right;
+        case '/':
+            return left / right;
+    }
+    throw invalid_argument("The provided operator couldn't be decoded.");
+}
+
 // Arithmetic operators
 ComplexNumber ComplexNumber::operator+(const ComplexNumber &number) const {
     return ComplexNumber(m_real + number.m_real, m_imaginary + number.m_imaginary);
@@ -34,8 +48,15 @@ ComplexNumber ComplexNumber::operator/(const ComplexNumber &number) const {
     return ComplexNumber(newReal, newImaginary);
 }
 
-// Stream output operator
+// Stream operators
 ostream &operator<<(ostream &out, const ComplexNumber &number) {
     out << number.m_real << (number.m_imaginary >= 0 ? "+" : "") << number.m_imaginary << "i";
     return out;
+}
+
+istream &operator>>(istream &in, ComplexNumber &number) {
+    char imaginarySign, iLetter;
+    // TODO
+    in >> number.m_real >> imaginarySign >> number.m_imaginary >> iLetter;
+    return in;
 }

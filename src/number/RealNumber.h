@@ -12,6 +12,8 @@ public:
 
     RealNumber &setValue(double value);
 
+    friend RealNumber decodeExpressionResult(const RealNumber &left, char op, const RealNumber &right);
+
     // Arithmetic operators
     RealNumber operator+(const RealNumber &number) const;
 
@@ -21,8 +23,10 @@ public:
 
     RealNumber operator/(const RealNumber &number) const;
 
-    // Stream output operator
+    // Stream operators
     friend ostream &operator<<(ostream &out, const RealNumber &number);
+
+    friend istream &operator>>(istream &in, RealNumber &number);
 
 private:
     double m_value;

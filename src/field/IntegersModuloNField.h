@@ -6,12 +6,14 @@
 
 class IntegersModuloNField : public BaseMathField {
 public:
-    explicit IntegersModuloNField(long long n);
+    explicit IntegersModuloNField(long long modulus);
+
+    long long getModulus();
 
     IntegerModuloNNumber createNumber() const;
 
 private:
-    long long m_n;
+    long long m_modulus;
 };
 
 #endif //PROIECT_POO_RATIONALNFIELD_H

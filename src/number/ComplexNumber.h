@@ -2,6 +2,7 @@
 #define CRIPTOGRAPHY_COMPLEXNUMBER_H
 
 #include <ostream>
+#include <iostream>
 
 using namespace std;
 
@@ -10,6 +11,8 @@ public:
     explicit ComplexNumber(double real = 0.0, double imaginary = 0.0);
 
     ComplexNumber &setValue(double real, double imaginary);
+
+    friend ComplexNumber decodeExpressionResult(const ComplexNumber &left, char op, const ComplexNumber &right);
 
     // Arithmetic operators
     ComplexNumber operator+(const ComplexNumber &number) const;
@@ -20,8 +23,10 @@ public:
 
     ComplexNumber operator/(const ComplexNumber &number) const;
 
-    // Stream output operator
+    // Stream operators
     friend ostream &operator<<(ostream &out, const ComplexNumber &number);
+
+    friend istream &operator>>(istream &in, ComplexNumber &number);
 
 private:
     double m_real, m_imaginary;
