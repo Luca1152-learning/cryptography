@@ -19,7 +19,7 @@ BaseMathField *FieldFactory::promptFieldCreation() {
         if (cin >> setChoice and setChoice >= 1 and setChoice <= 6) {
             break;
         } else {
-            cout << "\nPlease enter a valid choice.\n\n";
+            cout << "\n[!] Please enter a valid choice.\n\n";
             cin.clear();
             cin.ignore(256, '\n');
         }
@@ -29,12 +29,11 @@ BaseMathField *FieldFactory::promptFieldCreation() {
     long long modulus;
     if (setChoice == 3) {
         while (true) {
-            cout << "\n"
-                    "Choose the modulus (>1): ";
+            cout << "\nChoose the modulus (>1): ";
             if (cin >> modulus and modulus > 1) {
                 break;
             } else {
-                cout << "\nPlease enter a valid modulus.\n";
+                cout << "\n[!] Please enter a valid modulus.\n";
                 cin.clear();
                 cin.ignore(256, '\n');
             }

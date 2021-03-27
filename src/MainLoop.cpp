@@ -16,12 +16,13 @@ bool MainLoop::promptCommand() {
         cout << "(1) List the current fields\n"
              << "(2) Add a new field\n"
              << "(3) Compute mathematical operations on a field\n"
-             << "(4) Exit\n"
-             << "Operation to perform (1-4): ";
-        if (cin >> commandChoice and commandChoice >= 1 and commandChoice <= 4) {
+             << "(4) Check for fields isomorphism\n"
+             << "(5) Exit\n"
+             << "Operation to perform (1-5): ";
+        if (cin >> commandChoice and commandChoice >= 1 and commandChoice <= 5) {
             break;
         } else {
-            cout << "\nPlease enter a valid choice.\n\n";
+            cout << "\n[!] Please enter a valid choice.\n\n";
             cin.clear();
             cin.ignore(256, '\n');
         }
@@ -36,6 +37,9 @@ bool MainLoop::promptCommand() {
         return true;
     } else if (commandChoice == 3) {
         promptMathOperations();
+        return true;
+    } else if (commandChoice == 4) {
+        promptFieldIsomorphism();
         return true;
     } else {
         return false;
@@ -82,7 +86,7 @@ void MainLoop::promptMathOperations() const {
         if (cin >> fieldChoice and fieldChoice >= 1 and fieldChoice <= m_fields.size()) {
             break;
         } else {
-            cout << "\nPlease enter a valid choice.\n\n";
+            cout << "\n[!] Please enter a valid choice.\n\n";
             cin.clear();
             cin.ignore(256, '\n');
         }
@@ -90,4 +94,37 @@ void MainLoop::promptMathOperations() const {
     cout << "\n";
 
     FieldEquationsPrompter::promptForEquations(m_fields[fieldChoice - 1]);
+}
+
+void MainLoop::promptFieldIsomorphism() const {
+    if (m_fields.size() < 1) {
+        cout << "[!] At least one field has to be entered for this option to become available\n\n";
+        return;
+    }
+
+    listAllFields();
+    int firstField, secondField;
+    while (true) {
+        cout << "The first field (1-" << m_fields.size() << "): ";
+        if (cin >> firstField and firstField >= 1 and firstField <= m_fields.size()) {
+            break;
+        } else {
+            cout << "[!] Please enter a valid choice.\n";
+            cin.clear();
+            cin.ignore(256, '\n');
+        }
+    }
+    while (true) {
+        cout << "The second field (1-" << m_fields.size() << "): ";
+        if (cin >> secondField and secondField >= 1 and secondField <= m_fields.size()) {
+            break;
+        } else {
+            cout << "[!] Please enter a valid choice.\n";
+            cin.clear();
+            cin.ignore(256, '\n');
+        }
+    }
+
+    bool areIsomorphic = m_fields[firstField - 1]->isIsomorphicTo(m_fields[secondField - 1]);
+    cout << "\nAre the two fields isomorphic: " << (areIsomorphic ? "YES" : "NO") << "\n\n";
 }

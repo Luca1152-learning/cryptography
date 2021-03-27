@@ -8,6 +8,8 @@ class RationalField : public BaseMathField {
 public:
     string getName() const override;
 
+    bool isIsomorphicTo(BaseMathField *field) const override;
+
     RationalNumber createNumber() const;
 };
 

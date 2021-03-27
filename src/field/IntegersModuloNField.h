@@ -10,6 +10,8 @@ public:
 
     string getName() const override;
 
+    bool isIsomorphicTo(BaseMathField *field) const override;
+
     long long getModulus() const;
 
     IntegerModuloNNumber createNumber() const;

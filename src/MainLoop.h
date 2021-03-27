@@ -28,6 +28,8 @@ private:
     void promptFieldCreation();
 
     void promptMathOperations() const;
+
+    void promptFieldIsomorphism() const;
 };
 
 #endif //CRYPTOGRAPHY_MAINLOOP_H

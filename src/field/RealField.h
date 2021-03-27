@@ -9,6 +9,8 @@ class RealField : public BaseMathField {
 public:
     string getName() const override;
 
+    bool isIsomorphicTo(BaseMathField *field) const override;
+
     RealNumber createNumber() const;
 };
 

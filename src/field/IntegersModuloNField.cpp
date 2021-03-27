@@ -13,6 +13,17 @@ string IntegersModuloNField::getName() const {
     return "Integers modulo " + to_string(m_modulus);
 }
 
+bool IntegersModuloNField::isIsomorphicTo(BaseMathField *field) const {
+    auto *integersModuloNField = dynamic_cast<IntegersModuloNField *>(field);
+
+    // The integers modulo n field is isomorphic only to other integers modulo n fields with the same modulus
+    if (integersModuloNField and m_modulus == integersModuloNField->getModulus()) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 long long IntegersModuloNField::getModulus() const {
     return m_modulus;
 }

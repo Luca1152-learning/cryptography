@@ -10,6 +10,8 @@ class BaseMathField {
 public:
     virtual string getName() const = 0;
 
+    virtual bool isIsomorphicTo(BaseMathField *field) const = 0;
+
     virtual ~BaseMathField() = default;
 };
 
