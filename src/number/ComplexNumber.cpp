@@ -50,6 +50,14 @@ ComplexNumber ComplexNumber::operator/(const ComplexNumber &number) const {
     return ComplexNumber(newReal, newImaginary);
 }
 
+bool ComplexNumber::operator==(const ComplexNumber &number) const {
+    return m_real == number.m_real && m_imaginary == number.m_imaginary;
+}
+
+bool ComplexNumber::operator!=(const ComplexNumber &number) const {
+    return !(number == *this);
+}
+
 // Stream operators
 ostream &operator<<(ostream &out, const ComplexNumber &number) {
     out << number.m_real << (number.m_imaginary >= 0 ? "+" : "") << number.m_imaginary << "i";

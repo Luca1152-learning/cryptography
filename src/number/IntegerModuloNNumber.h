@@ -24,6 +24,10 @@ public:
 
     IntegerModuloNNumber operator/(const IntegerModuloNNumber &number) const;
 
+    bool operator==(const IntegerModuloNNumber &number) const;
+
+    bool operator!=(const IntegerModuloNNumber &number) const;
+
     // Stream operators
     friend ostream &operator<<(ostream &out, const IntegerModuloNNumber &number);
 

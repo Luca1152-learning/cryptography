@@ -23,6 +23,10 @@ public:
 
     RealNumber operator/(const RealNumber &number) const;
 
+    bool operator==(const RealNumber &number) const;
+
+    bool operator!=(const RealNumber &number) const;
+
     // Stream operators
     friend ostream &operator<<(ostream &out, const RealNumber &number);
 

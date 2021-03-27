@@ -43,6 +43,14 @@ RealNumber RealNumber::operator/(const RealNumber &number) const {
     return RealNumber(m_value / number.m_value);
 }
 
+bool RealNumber::operator==(const RealNumber &number) const {
+    return m_value == number.m_value;
+}
+
+bool RealNumber::operator!=(const RealNumber &number) const {
+    return !(number == *this);
+}
+
 // Stream operators
 ostream &operator<<(ostream &out, const RealNumber &number) {
     out << number.m_value;

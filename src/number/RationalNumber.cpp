@@ -43,6 +43,14 @@ RationalNumber RationalNumber::operator/(const RationalNumber &number) const {
     return RationalNumber(m_value / number.m_value);
 }
 
+bool RationalNumber::operator==(const RationalNumber &number) const {
+    return m_value == number.m_value;
+}
+
+bool RationalNumber::operator!=(const RationalNumber &number) const {
+    return !(number == *this);
+}
+
 // Stream operators
 ostream &operator<<(ostream &out, const RationalNumber &number) {
     out << number.m_value;

@@ -23,6 +23,10 @@ public:
 
     RationalNumber operator/(const RationalNumber &number) const;
 
+    bool operator==(const RationalNumber &number) const;
+
+    bool operator!=(const RationalNumber &number) const;
+
     // Stream operators
     friend ostream &operator<<(ostream &out, const RationalNumber &number);
 

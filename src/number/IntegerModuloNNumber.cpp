@@ -68,6 +68,18 @@ IntegerModuloNNumber IntegerModuloNNumber::operator/(const IntegerModuloNNumber 
     throw runtime_error("Unexpected. An inverse should have been found.");
 }
 
+bool IntegerModuloNNumber::operator==(const IntegerModuloNNumber &number) const {
+    if (m_modulus != number.m_modulus) {
+        throw IncompatibleFieldsException();
+    }
+
+    return m_value == number.m_value;
+}
+
+bool IntegerModuloNNumber::operator!=(const IntegerModuloNNumber &number) const {
+    return !(number == *this);
+}
+
 // Stream operators
 ostream &operator<<(ostream &out, const IntegerModuloNNumber &number) {
     out << number.m_value << " (mod " << number.m_modulus << ")";

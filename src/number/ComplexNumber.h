@@ -23,6 +23,10 @@ public:
 
     ComplexNumber operator/(const ComplexNumber &number) const;
 
+    bool operator==(const ComplexNumber &number) const;
+
+    bool operator!=(const ComplexNumber &number) const;
+
     // Stream operators
     friend ostream &operator<<(ostream &out, const ComplexNumber &number);
 
