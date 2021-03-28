@@ -27,7 +27,9 @@ private:
     // Pointers array
     vector<BaseMathField *> m_fields;
 
-    void copyFieldsVector(const MainLoop &mainLoop);
+    void copyMainLoop(const MainLoop &mainLoop);
+
+    void deallocateSpace();
 
     bool promptCommand();
 

@@ -1,21 +1,26 @@
 #include "FieldEquationsPrompter.h"
 
 void FieldEquationsPrompter::promptForEquations(BaseMathField *field) {
-    auto *integersModuloNField = dynamic_cast<IntegersModuloNField *>(field);
-    if (integersModuloNField) {
-        promptForEquationsInIntegersModuloNField(*integersModuloNField);
+    auto *finiteField = dynamic_cast<FiniteField *>(field);
+    if (finiteField) {
+        promptForEquationsInFiniteField(*finiteField);
     } else {
-        auto *rationalField = dynamic_cast<RationalField *>(field);
-        if (rationalField) {
-            promptForEquationsInRationalField(*rationalField);
+        auto *integersModuloNField = dynamic_cast<IntegersModuloNField *>(field);
+        if (integersModuloNField) {
+            promptForEquationsInIntegersModuloNField(*integersModuloNField);
         } else {
-            auto *realField = dynamic_cast<RealField *>(field);
-            if (realField) {
-                promptForEquationsInRealField(*realField);
+            auto *rationalField = dynamic_cast<RationalField *>(field);
+            if (rationalField) {
+                promptForEquationsInRationalField(*rationalField);
             } else {
-                auto *complexField = dynamic_cast<ComplexField *>(field);
-                if (complexField) {
-                    promptForEquationsInComplexField(*complexField);
+                auto *realField = dynamic_cast<RealField *>(field);
+                if (realField) {
+                    promptForEquationsInRealField(*realField);
+                } else {
+                    auto *complexField = dynamic_cast<ComplexField *>(field);
+                    if (complexField) {
+                        promptForEquationsInComplexField(*complexField);
+                    }
                 }
             }
         }
@@ -35,6 +40,35 @@ char FieldEquationsPrompter::promptForOperator() {
         } else {
             cout << "[!] Please enter a valid operator.\n";
         }
+    }
+}
+
+void FieldEquationsPrompter::promptForEquationsInFiniteField(FiniteField &field) {
+    auto promptForFiniteFieldNumber = [](FiniteFieldNumber &value) {
+        while (true) {
+            cout << "Enter the operand: ";
+            if (cin >> value) {
+                cin.get();
+                break;
+            } else {
+                cout << "[!] Please enter a valid operand.\n";
+                cin.clear();
+                cin.ignore(256, '\n');
+            }
+        }
+    };
+
+    FiniteFieldNumber result = field.createNumber();
+    promptForFiniteFieldNumber(result);
+    while (true) {
+        char op = promptForOperator();
+        if (op == 0) {
+            return;
+        }
+        FiniteFieldNumber currentNumber = field.createNumber();
+        promptForFiniteFieldNumber(currentNumber);
+        result = decodeExpressionResult(result, op, currentNumber);
+        cout << "Result: " << result << "\n";
     }
 }
 

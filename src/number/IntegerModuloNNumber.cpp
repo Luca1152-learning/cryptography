@@ -59,6 +59,9 @@ IntegerModuloNNumber IntegerModuloNNumber::operator/(const IntegerModuloNNumber 
     if (m_modulus != number.m_modulus) {
         throw IncompatibleFieldsException();
     }
+    if (number.m_value == 0) {
+        throw invalid_argument("Can't divide by 0.");
+    }
 
     for (long long inverse = 0; inverse < m_modulus; inverse++) {
         if ((inverse * number.m_value) % m_modulus == m_value) {
@@ -89,7 +92,7 @@ ostream &operator<<(ostream &out, const IntegerModuloNNumber &number) {
 istream &operator>>(istream &in, IntegerModuloNNumber &number) {
     in >> number.m_value;
     if (number.m_value < 0 or number.m_value >= number.m_modulus) {
-        // Set so the if (cin >> moduloNNumber) fails
+        // Set so the 'if (cin >> moduloNNumber)' fails
         in.setstate(std::ios::failbit);
     }
     return in;

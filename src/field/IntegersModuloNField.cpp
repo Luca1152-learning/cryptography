@@ -2,6 +2,7 @@
 
 #include "../math/MathUtils.h"
 #include "../exceptions/NotAFieldException.h"
+#include "FiniteField.h"
 
 IntegersModuloNField::IntegersModuloNField(long long int modulus) : m_modulus(modulus) {
     if (not MathUtils::isPrime(modulus)) {
@@ -15,13 +16,16 @@ string IntegersModuloNField::getName() const {
 
 bool IntegersModuloNField::isIsomorphicTo(BaseMathField *field) const {
     auto *integersModuloNField = dynamic_cast<IntegersModuloNField *>(field);
-
-    // The integers modulo n field is isomorphic only to other integers modulo n fields with the same modulus
     if (integersModuloNField and m_modulus == integersModuloNField->getModulus()) {
         return true;
-    } else {
-        return false;
     }
+
+    auto *finiteField = dynamic_cast<FiniteField *>(field);
+    if (finiteField and m_modulus == finiteField->getSize()) {
+        return true;
+    }
+
+    return false;
 }
 
 long long IntegersModuloNField::getModulus() const {

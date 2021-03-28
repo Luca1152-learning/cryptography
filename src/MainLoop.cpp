@@ -2,52 +2,64 @@
 
 MainLoop::MainLoop() {}
 
-void MainLoop::copyFieldsVector(const MainLoop &mainLoop) {
-    for (auto field: mainLoop.m_fields) {
-        auto *integersModuloNField = dynamic_cast<IntegersModuloNField *>(field);
-        if (integersModuloNField) {
-            IntegersModuloNField *newField = new IntegersModuloNField(*integersModuloNField);
-            m_fields.push_back(newField);
-        } else {
-            auto *rationalField = dynamic_cast<RationalField *>(field);
-            if (rationalField) {
-                RationalField *newField = new RationalField(*rationalField);
-                m_fields.push_back(newField);
-            } else {
-                auto *realField = dynamic_cast<RealField *>(field);
-                if (realField) {
-                    RealField *newField = new RealField(*realField);
-                    m_fields.push_back(newField);
-                } else {
-                    auto *complexField = dynamic_cast<ComplexField *>(field);
-                    if (complexField) {
-                        ComplexField *newField = new ComplexField(*complexField);
-                        m_fields.push_back(newField);
-                    }
-                }
-            }
-        }
-    }
-}
-
 MainLoop::MainLoop(const MainLoop &mainLoop) {
-    copyFieldsVector(mainLoop);
+    copyMainLoop(mainLoop);
 }
 
 MainLoop &MainLoop::operator=(const MainLoop &mainLoop) {
-    m_fields.clear();
-    copyFieldsVector(mainLoop);
+    deallocateSpace();
+    copyMainLoop(mainLoop);
     return *this;
 }
 
 MainLoop::~MainLoop() {
-    for (auto &field:m_fields) {
-        delete field;
-    }
+    deallocateSpace();
 }
 
 void MainLoop::run() {
     while (promptCommand());
+}
+
+void MainLoop::copyMainLoop(const MainLoop &mainLoop) {
+    for (auto field: mainLoop.m_fields) {
+        auto *finiteField = dynamic_cast<FiniteField *>(field);
+        if (finiteField) {
+            FiniteField *newField = new FiniteField(*finiteField);
+            m_fields.push_back(newField);
+            continue;
+        }
+        auto *integersModuloNField = dynamic_cast<IntegersModuloNField *>(field);
+        if (integersModuloNField) {
+            IntegersModuloNField *newField = new IntegersModuloNField(*integersModuloNField);
+            m_fields.push_back(newField);
+            continue;
+        }
+        auto *rationalField = dynamic_cast<RationalField *>(field);
+        if (rationalField) {
+            RationalField *newField = new RationalField(*rationalField);
+            m_fields.push_back(newField);
+            continue;
+        }
+        auto *realField = dynamic_cast<RealField *>(field);
+        if (realField) {
+            RealField *newField = new RealField(*realField);
+            m_fields.push_back(newField);
+            continue;
+        }
+        auto *complexField = dynamic_cast<ComplexField *>(field);
+        if (complexField) {
+            ComplexField *newField = new ComplexField(*complexField);
+            m_fields.push_back(newField);
+            continue;
+        }
+    }
+}
+
+void MainLoop::deallocateSpace() {
+    for (auto &field:m_fields) {
+        delete field;
+    }
+    m_fields.clear();
 }
 
 bool MainLoop::promptCommand() {
@@ -105,8 +117,10 @@ void MainLoop::promptFieldCreation() {
     cout << "Choose the field you want to create.\n\n";
     try {
         auto field = FieldFactory::promptFieldCreation();
-        m_fields.push_back(field);
-        cout << "\nField successfully created! Now you can perform mathematical operations on it.\n\n";
+        if (field) {
+            m_fields.push_back(field);
+            cout << "\nField successfully created! Now you can perform mathematical operations on it.\n\n";
+        }
     } catch (NotAFieldException e) {
         cout << "\n[!] The given structure is not a field. Try again.\n\n";
         promptFieldCreation();

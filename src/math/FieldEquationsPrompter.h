@@ -7,6 +7,7 @@
 #include "../field/ComplexField.h"
 #include "../field/RationalField.h"
 #include "../field/IntegersModuloNField.h"
+#include "../field/FiniteField.h"
 
 using namespace std;
 
@@ -16,6 +17,8 @@ public:
 
 private:
     static char promptForOperator();
+
+    static void promptForEquationsInFiniteField(FiniteField &field);
 
     static void promptForEquationsInIntegersModuloNField(const IntegersModuloNField &field);
 
