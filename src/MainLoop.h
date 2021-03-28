@@ -13,6 +13,12 @@ using namespace std;
 
 class MainLoop {
 public:
+    MainLoop();
+
+    MainLoop(const MainLoop &mainLoop);
+
+    MainLoop &operator=(const MainLoop &mainLoop);
+
     void run();
 
     ~MainLoop();
@@ -20,6 +26,8 @@ public:
 private:
     // Pointers array
     vector<BaseMathField *> m_fields;
+
+    void copyFieldsVector(const MainLoop &mainLoop);
 
     bool promptCommand();
 

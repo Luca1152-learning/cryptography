@@ -1,13 +1,53 @@
 #include "MainLoop.h"
 
-void MainLoop::run() {
-    while (promptCommand());
+MainLoop::MainLoop() {}
+
+void MainLoop::copyFieldsVector(const MainLoop &mainLoop) {
+    for (auto field: mainLoop.m_fields) {
+        auto *integersModuloNField = dynamic_cast<IntegersModuloNField *>(field);
+        if (integersModuloNField) {
+            IntegersModuloNField *newField = new IntegersModuloNField(*integersModuloNField);
+            m_fields.push_back(newField);
+        } else {
+            auto *rationalField = dynamic_cast<RationalField *>(field);
+            if (rationalField) {
+                RationalField *newField = new RationalField(*rationalField);
+                m_fields.push_back(newField);
+            } else {
+                auto *realField = dynamic_cast<RealField *>(field);
+                if (realField) {
+                    RealField *newField = new RealField(*realField);
+                    m_fields.push_back(newField);
+                } else {
+                    auto *complexField = dynamic_cast<ComplexField *>(field);
+                    if (complexField) {
+                        ComplexField *newField = new ComplexField(*complexField);
+                        m_fields.push_back(newField);
+                    }
+                }
+            }
+        }
+    }
+}
+
+MainLoop::MainLoop(const MainLoop &mainLoop) {
+    copyFieldsVector(mainLoop);
+}
+
+MainLoop &MainLoop::operator=(const MainLoop &mainLoop) {
+    m_fields.clear();
+    copyFieldsVector(mainLoop);
+    return *this;
 }
 
 MainLoop::~MainLoop() {
     for (auto &field:m_fields) {
         delete field;
     }
+}
+
+void MainLoop::run() {
+    while (promptCommand());
 }
 
 bool MainLoop::promptCommand() {
